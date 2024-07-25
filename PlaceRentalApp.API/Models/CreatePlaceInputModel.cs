@@ -7,6 +7,7 @@
         public decimal DailyPrice { get; set; }
         public AddressInputModel Address { get; set; }
         public int AllowedNumberPerson { get; set; }
-        public int AllowPets{ get; set; }
+        public bool AllowPets{ get; set; }
+        public int CreatedBy { get; set; }
     }
 }
