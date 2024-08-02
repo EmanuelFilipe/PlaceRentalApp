@@ -1,39 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PlaceRentalApp.Application.Exceptions;
-using PlaceRentalApp.Application.Models;
+﻿using PlaceRentalApp.Application.Models;
 using PlaceRentalApp.Application.ViewModels;
 using PlaceRentalApp.Core.Entities;
-using PlaceRentalApp.Infrasctructure.Persistence;
+using PlaceRentalApp.Core.Repositories;
 
 namespace PlaceRentalApp.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly PlaceRentalDbContext _dbContext;
-        public UserService(PlaceRentalDbContext context)
+        private readonly IUserRepository _userRepository;
+        const string NOT_FOUND = "Not found";
+
+        public UserService(IUserRepository userRepository)
         {
-            _dbContext = context;
+            _userRepository = userRepository;
         }
 
-        public UserDetailViewModel GetById(int id)
+        public ResultViewModel<UserDetailViewModel?> GetById(int id)
         {
-            var user = _dbContext.Users.AsNoTracking().SingleOrDefault(p => p.Id == id);
+            var user = _userRepository.GetById(id);
 
-            if (user is null) throw new NotFoundExceptions();
-
-            var model = UserDetailViewModel.FromEntity(user);
-
-            return model;
+            return user is null ? 
+                ResultViewModel<UserDetailViewModel>.Error(NOT_FOUND) :
+                ResultViewModel<UserDetailViewModel?>.Success(UserDetailViewModel.FromEntity(user));
         }
 
-        public int Insert(CreateUserInputModel inputModel)
+        public ResultViewModel<int> Insert(CreateUserInputModel inputModel)
         {
             var user = new User(inputModel.FullName, inputModel.Email, inputModel.BirthDate);
 
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
+            _userRepository.Add(user);
 
-            return user.Id;
+            return ResultViewModel<int>.Success(user.Id);
         }
     }
 }
