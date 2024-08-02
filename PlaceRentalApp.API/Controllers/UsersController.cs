@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PlaceRentalApp.API.Entities;
-using PlaceRentalApp.API.Models;
-using PlaceRentalApp.API.Persistence;
+using PlaceRentalApp.Application.Models;
+using PlaceRentalApp.Application.Services;
 
 namespace PlaceRentalApp.API.Controllers
 {
@@ -10,31 +8,25 @@ namespace PlaceRentalApp.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly PlaceRentalDbContext _dbContext;
-        public UsersController(PlaceRentalDbContext context)
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
         {
-            _dbContext = context;
+            _userService = userService;
         }
 
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            var user = _dbContext.Users.AsNoTracking().SingleOrDefault(p => p.Id == id);
-
-            if (user is null) return NotFound();
-
+            var user = _userService.GetById(id);
             return Ok(user);
         }
 
         [HttpPost]
-        public IActionResult Post(int id, [FromBody] CreateUserInputModel inputModel)
+        public IActionResult Post([FromBody] CreateUserInputModel inputModel)
         {
-            var user = new User(inputModel.FullName, inputModel.Email, inputModel.BirthDate);
-            
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
-
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, inputModel);
+            int id = _userService.Insert(inputModel);
+            return CreatedAtAction(nameof(GetById), new { id }, inputModel);
         }
     }
 }

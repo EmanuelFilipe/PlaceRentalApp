@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceRentalApp.API", "PlaceRentalApp.API\PlaceRentalApp.API.csproj", "{A4521CD7-2AB9-4B5D-9CE4-7BB02D1CE42D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceRentalApp.API", "PlaceRentalApp.API\PlaceRentalApp.API.csproj", "{A4521CD7-2AB9-4B5D-9CE4-7BB02D1CE42D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceRentalApp.Core", "PlaceRentalApp.Core\PlaceRentalApp.Core.csproj", "{37E4A732-3A0D-46E8-A8DD-8943A7636F1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceRentalApp.Infrasctructure", "PlaceRentalApp.Infrasctructure\PlaceRentalApp.Infrasctructure.csproj", "{05518C60-8FBE-4A4F-96A3-78CA44A8269A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceRentalApp.Application", "PlaceRentalApp.Application\PlaceRentalApp.Application.csproj", "{68D20FA9-517A-42C3-BA25-8BB91A26F7B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{A4521CD7-2AB9-4B5D-9CE4-7BB02D1CE42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4521CD7-2AB9-4B5D-9CE4-7BB02D1CE42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4521CD7-2AB9-4B5D-9CE4-7BB02D1CE42D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37E4A732-3A0D-46E8-A8DD-8943A7636F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37E4A732-3A0D-46E8-A8DD-8943A7636F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37E4A732-3A0D-46E8-A8DD-8943A7636F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37E4A732-3A0D-46E8-A8DD-8943A7636F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05518C60-8FBE-4A4F-96A3-78CA44A8269A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05518C60-8FBE-4A4F-96A3-78CA44A8269A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05518C60-8FBE-4A4F-96A3-78CA44A8269A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05518C60-8FBE-4A4F-96A3-78CA44A8269A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68D20FA9-517A-42C3-BA25-8BB91A26F7B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D20FA9-517A-42C3-BA25-8BB91A26F7B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D20FA9-517A-42C3-BA25-8BB91A26F7B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D20FA9-517A-42C3-BA25-8BB91A26F7B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
