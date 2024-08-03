@@ -31,5 +31,12 @@ namespace PlaceRentalApp.Infrasctructure.Repositories
             var user = _dbContext.Users.AsNoTracking().SingleOrDefault(p => p.Id == id);
             return user;
         }
+
+        public User? GetByLoginAndHash(string email, string hash)
+        {
+            var user = _dbContext.Users.AsNoTracking().SingleOrDefault(p => p.Email == email &&
+                                                                       p.Password == hash);
+            return user;
+        }
     }
 }

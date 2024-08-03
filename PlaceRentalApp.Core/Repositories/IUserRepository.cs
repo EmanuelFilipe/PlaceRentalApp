@@ -6,5 +6,6 @@ namespace PlaceRentalApp.Core.Repositories
     {
         User? GetById(int id);
         int Add(User user);
+        User? GetByLoginAndHash(string email, string hash);
     }
 }
