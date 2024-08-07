@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PlaceRentalApp.Application.Models;
 using PlaceRentalApp.Application.Services;
-using PlaceRentalApp.Core.Entities;
-using PlaceRentalApp.Core.ValueObjects;
 using PlaceRentalApp.Infrasctructure.Persistence;
 
 namespace PlaceRentalApp.API.Controllers
@@ -21,6 +19,7 @@ namespace PlaceRentalApp.API.Controllers
             _placeService = placeService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{search}")]
         public IActionResult Get(string search, DateTime startDate, DateTime endDate)
         {
@@ -29,6 +28,7 @@ namespace PlaceRentalApp.API.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "client, admin")]
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
@@ -37,6 +37,7 @@ namespace PlaceRentalApp.API.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Post([FromBody] CreatePlaceInputModel inputModel)
         {

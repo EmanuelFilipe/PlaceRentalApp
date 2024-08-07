@@ -29,5 +29,15 @@ namespace PlaceRentalApp.API.Controllers
             var result = _userService.Insert(inputModel);
             return CreatedAtAction(nameof(GetById), new { id = result.Data }, inputModel);
         }
+
+        [HttpPut("login")]
+        public IActionResult Login(LoginInputModel inputModel)
+        {
+            var result = _userService.Login(inputModel);
+
+            if (!result.IsSuccess) return BadRequest();
+
+            return Ok(result);
+        }
     }
 }
