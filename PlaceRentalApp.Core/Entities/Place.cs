@@ -37,11 +37,26 @@ namespace PlaceRentalApp.Core.Entities
         public List<PlaceBook> Books { get; set; }
         public List<PlaceAmenity> Amenities { get; private set; }
 
-        public void Update(string title, string description, decimal dailyPrice)
+        public bool Update(string title, string description, decimal dailyPrice)
         {
+            if (Status != PlaceStatus.Active) return false;
+
             Title = title;
             Description = description;
             DailyPrice = dailyPrice;
+
+            return true;
         }
+
+        public void Block() => Status = PlaceStatus.Blocked;
+
+        public bool IsBookAllowed(bool hasPet, int amountOfPerson)
+        {
+            if (!AllowPets && hasPet) return false;
+
+            return amountOfPerson <= AllowedNumberPerson;
+        }
+        
+
     }
 }

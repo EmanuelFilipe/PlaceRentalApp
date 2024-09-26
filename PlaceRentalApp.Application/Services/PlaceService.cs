@@ -89,9 +89,9 @@ namespace PlaceRentalApp.Application.Services
                 inputModel.AllowPets,
                 inputModel.CreatedBy);
 
-            _placeRepository.Add(place);
+            int id = _placeRepository.Add(place);
 
-            return ResultViewModel<int>.Success(place.Id);
+            return ResultViewModel<int>.Success(id);
         }
 
         public ResultViewModel InsertAmenity(int id, CreatePlaceAmenityInputModel inputModel)
