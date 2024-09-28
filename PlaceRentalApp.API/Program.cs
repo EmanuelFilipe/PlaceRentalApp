@@ -1,78 +1,73 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlaceRentalApp.API.Middlewares;
 using PlaceRentalApp.Application;
-using PlaceRentalApp.Application.Services;
 using PlaceRentalApp.Infrasctructure;
-using PlaceRentalApp.Infrasctructure.Persistence;
 
-namespace PlaceRentalApp.API
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddInfrastructure(builder.Configuration)
+                .AddApplication();
+
+// Add services to the container.
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+// torna o nome dos endpoints no swagger em minúsculo
+builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
 {
-    public class Program
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlaceRentalApp.API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header usando o esquema Bearer."
+    });
 
-            builder.Services.AddInfrastructure(builder.Configuration)
-                            .AddApplication();
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+       {
+           new OpenApiSecurityScheme
+           {
+               Reference = new OpenApiReference
+               {
+                   Type = ReferenceType.SecurityScheme,
+                   Id = "Bearer"
+               }
+           },
+           new string[] {}
+       }
+    });
+});
 
-            // Add services to the container.
-            builder.Services.AddExceptionHandler<ApiExceptionHandler>();
-            builder.Services.AddProblemDetails();
+var app = builder.Build();
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlaceRentalApp.API", Version = "v1" });
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "JWT Authorization header usando o esquema Bearer."
-                });
+app.UseHttpsRedirection();
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                 {
-                     {
-                           new OpenApiSecurityScheme
-                             {
-                                 Reference = new OpenApiReference
-                                 {
-                                     Type = ReferenceType.SecurityScheme,
-                                     Id = "Bearer"
-                                 }
-                             },
-                             new string[] {}
-                     }
-                 });
-            });
+app.UseAuthorization();
 
-            var app = builder.Build();
+app.MapControllers();
 
-            app.UseExceptionHandler();
+await app.RunAsync();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
+// necessário para o servidor de integração 'WebApplicationFactory' reconhecer essa classe
+// nos testes de integração
+public partial class Program
+{
+    protected Program() { }
 }

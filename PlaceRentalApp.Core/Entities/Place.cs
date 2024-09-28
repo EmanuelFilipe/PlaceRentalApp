@@ -57,6 +57,9 @@ namespace PlaceRentalApp.Core.Entities
             return amountOfPerson <= AllowedNumberPerson;
         }
         
-
+        public void SetCreatedBy (int id)
+        {
+            CreatedBy = id;
+        }
     }
 }
