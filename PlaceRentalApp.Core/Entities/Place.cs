@@ -61,5 +61,43 @@ namespace PlaceRentalApp.Core.Entities
         {
             CreatedBy = id;
         }
+
+        /// <summary>
+        /// RED: criado generico somente para poder compilar o teste
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        //public void Cancel()
+        //{
+        //}
+
+        // GREEN: fazendo o teste passar
+        //public void Cancel()
+        //{
+        //    Status = PlaceStatus.Inactive;
+        //}
+
+
+        // segundo teste
+        //public void Cancel()
+        //{
+        //    if (Books.Any(b => b.StartDate <= DateTime.Today && b.EndDate >= DateTime.Today))
+        //        throw new InvalidOperationException("Invalid status");
+
+        //    Status = PlaceStatus.Inactive;
+        //}
+
+        // refatorado
+        public void Cancel()
+        {
+            if (IsInMiddleOfBooking())
+                throw new InvalidOperationException("Invalid status");
+
+            Status = PlaceStatus.Inactive;
+        }
+
+        private bool IsInMiddleOfBooking()
+        {
+            return Books.Any(b => b.StartDate <= DateTime.Today && b.EndDate >= DateTime.Today);
+        }
     }
 }

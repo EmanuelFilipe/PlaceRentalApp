@@ -96,9 +96,8 @@ namespace PlaceRentalApp.UnitTests.Fakes
 
     public class PlaceFake : Faker<Place>
     {
-        public PlaceFake()
+        public PlaceFake(int id = 0)
         {
-
             CustomInstantiator(f => new Place(
                 f.Random.Word(),
                 f.Random.Word(),
@@ -112,6 +111,9 @@ namespace PlaceRentalApp.UnitTests.Fakes
             RuleFor(place => place.Address, f => new AddressFake().Generate());
             RuleFor(place => place.User, f => new UserFake().Generate()); 
             RuleFor(place => place.Amenities, f => new AmenityFake().Generate(5));//gera 5
+
+            if (id > 0)
+                RuleFor(p => p.Id, faker => id);
         }
     }
 }

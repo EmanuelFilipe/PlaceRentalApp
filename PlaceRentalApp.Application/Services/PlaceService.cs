@@ -119,5 +119,24 @@ namespace PlaceRentalApp.Application.Services
 
             return ResultViewModel.Success();
         }
+
+        //public ResultViewModel Cancel(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public ResultViewModel Cancel(int id)
+        {
+            var place = _placeRepository.GetById(id);
+
+            if (place is null) return ResultViewModel.Error("Not found");
+
+            place.Cancel();
+
+            _placeRepository.Update(place);
+
+            return ResultViewModel.Success();
+        }
+
     }
 }

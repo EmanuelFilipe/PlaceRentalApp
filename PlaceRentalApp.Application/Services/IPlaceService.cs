@@ -13,6 +13,7 @@ namespace PlaceRentalApp.Application.Services
         ResultViewModel Book(int id, CreateBookInputModel inputModel);
         ResultViewModel Update(int id, UpdatePlaceInputModel inputModel);
         ResultViewModel Delete(int id);
+        ResultViewModel Cancel(int id);
 
     }
 

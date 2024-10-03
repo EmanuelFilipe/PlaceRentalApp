@@ -2,7 +2,7 @@
 {
     public class PlaceBook : BaseEntity
     {
-        protected PlaceBook()
+        public PlaceBook()
         {
         }
 

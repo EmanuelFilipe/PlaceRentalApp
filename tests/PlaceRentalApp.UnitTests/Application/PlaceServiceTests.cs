@@ -79,6 +79,33 @@ namespace PlaceRentalApp.UnitTests.Application
 
             repository.Received(1).GetById(1);
         }
+
+        /// <summary>
+        /// TDD:
+        /// RED: cancel nao existe
+        /// </summary>
+        [Fact]
+        public void Cancel_PlaceIsOk_Success()
+        {
+            // arrange
+            var id = 123;
+            var place = new PlaceFake(id).Generate();
+
+            var repository = Substitute.For<IPlaceRepository>();
+            repository.GetById(Arg.Any<int>())
+                      .Returns(place);
+
+            var service = new PlaceService(repository);
+
+            // act
+            var result = service.Cancel(id);
+
+            // assert
+            Assert.True(result.IsSuccess);
+
+            repository.Received(1)
+                    .GetById(id);
+        }
     }
 }
 
