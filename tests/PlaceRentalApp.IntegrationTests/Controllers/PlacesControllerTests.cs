@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +63,24 @@ namespace PlaceRentalApp.IntegrationTests.Controllers
 
                 Assert.True(exists);
             }
+        }
+
+        [Fact]
+        public async Task AddPlace_IsCalledWithInvalidData_Error()
+        {
+            // arrange
+            var place = new PlaceFake().Generate();
+            place.Update(string.Empty, string.Empty, 0);
+
+            var json = JsonConvert.SerializeObject(place);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // act
+            var response = await _httpClient.PostAsync("api/places", content);
+
+            // assert
+            Assert.False(response.IsSuccessStatusCode);
+            Assert.True((int)response.StatusCode == StatusCodes.Status400BadRequest);
         }
     }
 }

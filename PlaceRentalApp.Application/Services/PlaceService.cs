@@ -1,16 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PlaceRentalApp.Application.Exceptions;
-using PlaceRentalApp.Application.Models;
+﻿using PlaceRentalApp.Application.Models;
 using PlaceRentalApp.Application.ViewModels;
 using PlaceRentalApp.Core.Entities;
 using PlaceRentalApp.Core.Repositories;
 using PlaceRentalApp.Core.ValueObjects;
-using PlaceRentalApp.Infrasctructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlaceRentalApp.Application.Services
 {

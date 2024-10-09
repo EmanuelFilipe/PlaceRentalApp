@@ -41,6 +41,8 @@ namespace PlaceRentalApp.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreatePlaceInputModel inputModel)
         {
+            if (string.IsNullOrEmpty(inputModel.Title)) return BadRequest();
+
             var result = _placeService.Insert(inputModel);
             return CreatedAtAction(nameof(GetById), new { id = result.Data }, inputModel);
         }
