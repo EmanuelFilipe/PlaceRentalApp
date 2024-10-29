@@ -8,7 +8,7 @@ namespace PlaceRentalApp.UnitTests.Fakes
         public AmenityFake()
         {
             CustomInstantiator(f => new PlaceAmenity(f.Random.Word(), 
-                                                     f.Random.Number(1, 999))
+                                                     f.Random.Number(1, 300))
             );
         }
     }
